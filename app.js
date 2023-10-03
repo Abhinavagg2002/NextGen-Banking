@@ -1,5 +1,5 @@
 // state
-let currCity = "London";
+let currCity = "Chandigarh";
 let units = "metric";
 
 // Selectors
@@ -29,6 +29,7 @@ document.querySelector(".weather__search").addEventListener('submit', e => {
 
 // units
 document.querySelector(".weather_unit_celsius").addEventListener('click', () => {
+    
     if(units !== "metric"){
         // change to metric
         units = "metric"
@@ -50,7 +51,8 @@ function convertTimeStamp(timestamp, timezone){
     const convertTimezone = timezone / 3600; // convert seconds to hours 
 
    const date = new Date(timestamp * 1000);
-   
+   console.log(convertTimezone);
+   console.log(date);
    const options = {
        weekday: "long",
        day: "numeric",
@@ -67,8 +69,6 @@ function convertTimeStamp(timestamp, timezone){
 
 
 
- 
-
 // convert country code to name
 function convertCountryCode(country){
     let regionNames = new Intl.DisplayNames(["en"], {type: "region"});
@@ -79,13 +79,13 @@ function getWeather(){
     const API_KEY = 'f7baff3d72f5f84f768d9df4f2af207b'
 
 fetch(`https://api.openweathermap.org/data/2.5/weather?q=${currCity}&appid=${API_KEY}&units=${units}`).then(res => res.json()).then(data => {
-    console.log(data)
+   // console.log(data)
 
     // Data is fetched from API
     // To set the city name and code
     // The innerHTML is used to set their attributes
     city.innerHTML = `${data.name}, ${convertCountryCode(data.sys.country)}`
-    dateTime.innerHTML = convertTimeStamp(data.dt, data.timezone); 
+    // dateTime.innerHTML = convertTimeStamp(data.dt, data.timezone); 
     weatherForecast.innerHTML = `<p>${data.weather[0].main}`
     weatherTemperature.innerHTML = `${data.main.temp.toFixed()}&#176`
     weatherIcon.innerHTML = `   <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png" />`
@@ -94,6 +94,7 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${currCity}&appid=${API
     weatherHumidity.innerHTML = `${data.main.humidity}%`
     weatherWind.innerHTML = `${data.wind.speed} ${units === "imperial" ? "mph": "m/s"}` 
     weatherPressure.innerHTML = `${data.main.pressure} hPa`
+    //console.log(convertTimeStamp(data.dt, data.timezone));
 })
 }
 
